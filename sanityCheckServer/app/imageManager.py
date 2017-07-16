@@ -92,7 +92,7 @@ class ImageManager(object):
 
         images = []
         buildNumbers = []
-        for i in range(self.latestBuildNumber, max(0, self.latestBuildNumber-numBuilds), -1):
+        for i in range(self.latestBuildNumber, max(0, self.latestBuildNumber-numBuilds)-1, -1):
 
             buildNumbers.append(i)
 
@@ -150,7 +150,7 @@ def compareImages(filename1, filename2):
 #im = ImageManager("/Users/sebastianschoellhammer/Documents/PyCharmProjects/SanitySuit/app/static/imageUploads")
 #print im.getRenderData(2, "TestScene1")
 
-print hasShaderError("/Users/sebastianschoellhammer/Documents/PyCharmProjects/SanitySuit/app/static/imageUploads/screenShot_6_SebsMac_TestScene1.png")
+#print hasShaderError("/Users/sebastianschoellhammer/Documents/PyCharmProjects/SanitySuit/app/static/imageUploads/screenShot_6_SebsMac_TestScene1.png")
 
 #compareImages("/Users/sebastianschoellhammer/Documents/PyCharmProjects/SanitySuit/app/static/imageUploads/screenShot_0_SebsMac_TestScene1.png",
  #             "/Users/sebastianschoellhammer/Documents/PyCharmProjects/SanitySuit/app/static/imageUploads/screenShot_7_SebsMac_TestScene1.png")

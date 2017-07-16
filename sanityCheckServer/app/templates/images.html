@@ -32,7 +32,7 @@
         <th> {{ data.buildNumbers[loop.index0] }} </th>
          {% for screenShot in row: %}
         <th>
-            <img src="static/imageUploads/{{ screenShot | default('missing.jpg') }}" alt={{ screenShot }} width="320" height="180" />
+            <img src="static/imageUploads/{{ screenShot | default('missing.jpg') }}" alt={{ screenShot }} width="320px" height="180px" />
         </th>
         {% endfor %}
     </tr>
