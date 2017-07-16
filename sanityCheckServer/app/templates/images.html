@@ -1,0 +1,45 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+
+<h1>Awesome?:</h1>
+
+{% if data %}
+
+
+<table>
+    <tr>
+         {% for device in data.devices: %}
+        <th text-align: left;>
+            {{ device }}
+        </th>
+        {% endfor %}
+    </tr>
+</table>
+
+<table>
+
+    <tr>
+        <th> /#/ </th>
+        {% for deviceName in data.deviceNames: %}
+        <th> {{ deviceName}} </th>
+        {% endfor %}
+    </tr>
+
+    {% for row in data.images: %}
+    <tr>
+        <th> {{ data.buildNumbers[loop.index0] }} </th>
+         {% for screenShot in row: %}
+        <th>
+            <img src="static/imageUploads/{{ screenShot | default('missing.jpg') }}" alt={{ screenShot }} width="320" height="180" />
+        </th>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
+
+
+{% endif %}
+
+{% endblock %}
