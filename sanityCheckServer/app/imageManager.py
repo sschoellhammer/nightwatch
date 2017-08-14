@@ -53,6 +53,8 @@ class ImageManager(object):
     def readImages(self, folder):
         self.screenShotDict = {}
         self.screenShots = []
+        if not os.path.isdir(folder):
+            return []
         filenames = filterByFiletype(os.listdir(folder), ["png"])
 
         deviceNames = set()
