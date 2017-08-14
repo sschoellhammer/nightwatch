@@ -31,14 +31,20 @@ def allowed_file(filename):
 @app.route('/upload', methods=['GET', 'POST'])
 def upload_file():
     if request.method == 'POST':
+        print "Received post request"
         # check if the post request has the file part
         if 'file' not in request.files:
+            print "no file part"
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
+
         # if user does not select file, browser also
         # submit a empty part without filename
+        print file.filename.decode("utf-8")
         if file.filename == '':
+
+            print "no selected file"
             flash('No selected file')
             return redirect(request.url)
         if file and allowed_file(file.filename):
@@ -52,6 +58,8 @@ def upload_file():
 
             print "Uploaded: " + filename
 
+        else:
+            print "Error - not allowed filename:", file.filename
             #return redirect(url_for('uploaded_file',
             #                      filename=filename))
     return '''
@@ -70,7 +78,11 @@ def upload_file():
 def showImages():
 
     im = imageManager.ImageManager(app.config['UPLOAD_FOLDER'])
-    data = im.getRenderData(10, "TestScene1")
-    print data
-    return render_template('images.html',
-                           data=data)
+    s = ""
+    for sceneName in im.sceneNames:
+        print sceneName
+        data = im.getRenderData(10, sceneName)
+
+        s+= render_template('images.html',
+                               data=data)
+    return s

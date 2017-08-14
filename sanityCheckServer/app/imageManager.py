@@ -5,11 +5,10 @@ def makeList(l):
         l = list(l)
     return l
 
-def filterByFiletype(files, exts):
+def filterByFiletype(files,exts):
     exts = makeList(exts)
     for i in range(len(exts)):
         exts[i] = exts[i].lower()
-    print exts
     filteredFiles = []
 
     for filename in files:
@@ -26,13 +25,19 @@ class ScreenShot(object):
         self.sceneName = sceneName
         self.deviceName = deviceName
         self.filename = filename
+    def __repr__(self):
+        return "Screenshot \nBuildnumber: {0}\nSceneName: {1}\nDeviceName: {2}\nFilename: {3}\n".format(self.buildNumber, self.sceneName,self.deviceName,self.filename)
 
 
 
 def getScreenShotFromFilename(filename):
     filenameNoExt = os.path.splitext(filename)[0]
-
-    x, buildNumber, deviceName, sceneName = filenameNoExt.split("_")
+    bits = filenameNoExt.split("_")
+    buildNumber = bits[1]
+    deviceName = bits[2]
+    sceneName = "_".join(bits[3:])
+    print sceneName
+    #x, buildNumber, deviceName, sceneName = filenameNoExt.split("_")
     screenShot = ScreenShot(int(buildNumber), sceneName, deviceName, filename)
     return screenShot
 
@@ -40,7 +45,9 @@ def getScreenShotFromFilename(filename):
 class ImageManager(object):
     def __init__(self, folder):
         self.latestBuildNumber = 0
+        self.sceneNames = []
         self.readImages(folder)
+
 
 
     def readImages(self, folder):
@@ -55,6 +62,8 @@ class ImageManager(object):
             deviceNames.add(screenShot.deviceName)
             self.screenShotDict["{0}_{1}_{2}".format(screenShot.buildNumber, screenShot.deviceName, screenShot.sceneName)] = screenShot
             self.screenShots.append(screenShot)
+            if screenShot.sceneName not in self.sceneNames:
+                self.sceneNames.append(screenShot.sceneName)
 
             if screenShot.buildNumber > self.latestBuildNumber:
                 self.latestBuildNumber = screenShot.buildNumber

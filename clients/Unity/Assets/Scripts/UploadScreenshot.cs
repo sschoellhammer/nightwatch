@@ -4,17 +4,16 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Networking;
 
-
-public class UploadScreenshot : MonoBehaviour {
+public class UploadScreenshot : MonoBehaviour 
+{
 
     Camera captureCamera;
 
-    public bool capture = false;
+    
     byte[] bytes;
 
-    //string imageUploadURL = "http://127.0.0.1:5000/upload";
-    //public string imageUploadURL = "http://192.168.2.255:5000/upload";
-    string imageUploadURL = "http://192.168.0.2:5000/upload"; 
+    public string imageUploadURL = "http://185.74.13.86:5000/upload";
+
 	// Use this for initialization
 
     public  Text text;
@@ -24,9 +23,8 @@ public class UploadScreenshot : MonoBehaviour {
 
     int     buildNumber;
     string  deviceName;
-
+	bool capture = false;
     int _temp = 0;
-
 
     void Start () {
         
@@ -63,7 +61,7 @@ public class UploadScreenshot : MonoBehaviour {
         bytes = tex.EncodeToPNG();
         //Debug.Log("Captured");
 
-        StartCoroutine(UploadScreenShot());
+        
 
 
     }
@@ -82,6 +80,7 @@ public class UploadScreenshot : MonoBehaviour {
         buildNumber = _temp;
         _temp += 1;
         TakeScreenShot();
+		StartCoroutine(UploadScreenShot());
         return true;
     
     }
@@ -102,7 +101,7 @@ public class UploadScreenshot : MonoBehaviour {
         UnityWebRequest www = UnityWebRequest.Post(imageUploadURL, form);
         //text.text = "before send";
         yield return www.Send();
-        if(www.isError) {
+        if(www.isNetworkError) {
             text.text = www.error;
         }
         else {
