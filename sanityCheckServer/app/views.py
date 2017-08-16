@@ -83,7 +83,6 @@ def showImages():
     im = imageManager.ImageManager(app.config['UPLOAD_FOLDER'])
     s = ""
     for sceneName in im.sceneNames:
-        print sceneName
         data = im.getRenderData(10, sceneName)
 
         s+= render_template('images.html',
